@@ -1,0 +1,31 @@
+%{
+    #include "parser.tab.h"
+%}
+
+
+white		[ \t\n]+
+digit		[0-9]
+integer 	{digit}+
+
+%%
+
+{white} { /* We ignore white space characters */ }
+
+{integer}	{ return(NUMBER);                  }
+
+"+"		{ return(PLUS);                                                 }
+"-"		{ return(MINUS);                                                }
+"*"		{ return(TIMES);                                                }
+"/"		{ return(DIVIDE);                                               }
+"^"     { return(EXPO);                                                 }
+"."		{ return(PERIOD);                                               }
+"("		{ return(LEFT_PARENTHESIS);                                     }
+")"		{ return(RIGHT_PARENTHESIS);                                    }
+[xyz]   { yylval.character = *yytext; return(IDENTIFIER);               }
+"let"   { return(LET);                                                  }
+";"     {return(SEMICOLON);                                             }
+":="    {return(ASSIGNMENT);                                            }
+"print" {return(PRINT);                                                 }
+
+.       { return(INVALID);                                              }
+
